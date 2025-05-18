@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stylish Dark Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Smooth button press animation */
+    button:active {
+      transform: scale(0.95);
+      transition: transform 0.1s ease;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center min-h-screen font-sans">
+
+  <div class="bg-gradient-to-tr from-gray-800 to-gray-900 rounded-3xl shadow-2xl p-8 w-96 max-w-full">
+    <input
+      id="display"
+      type="text"
+      readonly
+      class="w-full bg-gray-900 text-right p-5 rounded-xl mb-8 text-4xl font-mono text-white placeholder-gray-500 shadow-inner"
+      placeholder="0"
+    />
+
+    <div class="grid grid-cols-4 gap-5">
+      <!-- Number buttons -->
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="7">7</button>
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="8">8</button>
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="9">9</button>
+      <button class="btn-op bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg font-bold text-2xl" data-value="/">÷</button>
+
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="4">4</button>
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="5">5</button>
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="6">6</button>
+      <button class="btn-op bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg font-bold text-2xl" data-value="*">×</button>
+
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="1">1</button>
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="2">2</button>
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="3">3</button>
+      <button class="btn-op bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg font-bold text-2xl" data-value="-">−</button>
+
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value="0">0</button>
+      <button class="btn-num bg-gray-700 hover:bg-gray-600 text-white rounded-xl shadow-lg font-semibold text-xl" data-value=".">.</button>
+      <button id="clear" class="btn-clear bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg font-bold text-xl">C</button>
+      <button class="btn-op bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg font-bold text-2xl" data-value="+">+</button>
+
+      <button id="equals" class="col-span-4 bg-gradient-to-r from-orange-500 to-yellow-400 hover:from-orange-600 hover:to-yellow-500 text-gray-900 font-extrabold rounded-3xl shadow-2xl text-3xl py-4 mt-4">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    const buttons = document.querySelectorAll('.btn-num, .btn-op');
+    const clearBtn = document.getElementById('clear');
+    const equalsBtn = document.getElementById('equals');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const val = button.getAttribute('data-value');
+        if (val) {
+          if (display.value === "0") {
+            display.value = val; // Replace 0 with first input
+          } else {
+            display.value += val;
+          }
+        }
+      });
+    });
+
+    clearBtn.addEventListener('click', () => {
+      display.value = '';
+    });
+
+    equalsBtn.addEventListener('click', () => {
+      try {
+        const result = eval(display.value);
+        display.value = result;
+      } catch {
+        display.value = 'Error';
+      }
+    });
+  </script>
+
+</body>
+</html>
